@@ -1,38 +1,19 @@
 import React, { Component } from 'react';
-import { Accounts } from "meteor/accounts-base";
 import {Links} from '../api/links';
 import {Meteor} from 'meteor/meteor'
 import LinksList from './LinksList';
-class Link extends Component {
+import PrivateHeader from './PrivateHeader'
+import AddLink from './AddLink'
 
-    onLogout = () => {
-        Accounts.logout();
-    }
 
-    onSubmit = (e) => {
-        const url = this.refs.url.value.trim();
+export default () =>{
 
-        e.preventDefault();
-
-        if(url){
-            Links.insert({url,userId:Meteor.userId()})
-            this.refs.url.value ='';
-        }
-    }
-    render() {
-        return (
-            <div>
-                Links
-                <button onClick={this.onLogout}>Logout</button>
-                <p>Add link</p>
-                <form onSubmit={this.onSubmit}>
-                    <input type="text" ref="url" placeholder="enter the url name" />
-                    <button>Add Link</button>
-                </form>
-                <LinksList/>
-            </div>
-        );
-    }
+    return(
+        <div>
+         <PrivateHeader title="Short Links"/>
+         <AddLink/>              
+         <LinksList/>
+        </div>
+    );
 }
 
-export default Link;

@@ -1,20 +1,33 @@
-import { Mongo } from 'meteor/mongo';
-import { Meteor } from 'meteor/meteor';
-
-export const Links = new Mongo.Collection('links');
+import { Mongo } from "meteor/mongo";
+import { Meteor } from "meteor/meteor";
+import SimpleSchema from "simpl-schema";
+import shortid from 'shortid';
+export const Links = new Mongo.Collection("links");
 
 if (Meteor.isServer) {
-
-    Meteor.publish('links',function() {
-
-        return Links.find({userId:this.userId});
-    })
+  Meteor.publish("links", function() {
+    return Links.find({ userId: this.userId });
+  });
 }
 
 Meteor.methods({
-
-    greetUser(){
-        console.log("greet is running")
-        return "hello user"
+  "links.insert"(url) {
+    if (!this.userId) {
+      throw Meteor.Error("not-authorized");
     }
-})
+
+    new SimpleSchema({
+      url: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Url,
+        label: "Your Link"
+      }
+    }).validate({ url });
+
+    Links.insert({
+      _id:shortid.generate(),
+      url,
+      userId: this.userId
+    });
+  }
+});
