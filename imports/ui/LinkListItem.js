@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Clipboard from "clipboard";
 import {Meteor} from 'meteor/meteor'
+import moment from 'moment';
 class LinkListItem extends Component {
   state = {
     copyStatus: false
@@ -25,14 +26,23 @@ class LinkListItem extends Component {
   componentWillUnmount() {
     this.clipboard.destroy();
   }
+renderStats(){
+    const visitMessage = this.props.visitedCount === 1 ? 'Visit' : 'Visits';
+    let visitedMessage = null;
 
+    if(typeof this.props.lastVisitedAt === 'number'){
+        visitedMessage = `(visited ${moment(this.props.lastVisitedAt).fromNow()})`
+    }
+    return  <p>{this.props.visitedCount} {visitMessage} - {visitedMessage}</p>
+}
   render() {
     return (
       <div>
         <h2>{this.props.url}</h2>
         <p>{this.props.shotrtUrl}</p>
         <p>{this.props.visible.toString()}</p>
-        <p>{this.props.visitedCount} - {this.props.lastVisitedAt}</p>
+       {this.renderStats()}
+       <a href={this.props.shotrtUrl} target="_blank">Visit</a>
         <button ref="copy" data-clipboard-text={this.props.shotrtUrl}>
           {this.state.copyStatus ? 'Copied' : 'Copy'}
         </button>
