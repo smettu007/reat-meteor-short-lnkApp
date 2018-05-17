@@ -3,6 +3,7 @@ import { Tracker } from 'meteor/tracker'
 import {Meteor} from 'meteor/meteor'
 import { Links } from '../api/links';
 import LinkListItem from './LinkListItem';
+import {Session} from 'meteor/session';
 
 class LinksList extends Component {
     state = {
@@ -14,7 +15,9 @@ class LinksList extends Component {
        this.linksTracker= Tracker.autorun(() => {
            
             Meteor.subscribe('links');
-            const links = Links.find().fetch();
+            const links = Links.find({
+                visible:Session.get('showVisible')
+            }).fetch();
             this.setState({links})
         })
 
@@ -38,7 +41,7 @@ class LinksList extends Component {
             <div>
                 <p>Links List</p>
                 <div>
-
+                    
                     {this.renderLinksListItems()}
                 </div>
             </div>
