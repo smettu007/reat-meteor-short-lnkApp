@@ -34,6 +34,7 @@ class Login extends Component {
               placeholder="Password"
             />
             <input className="button" type="submit" placeholder="Login" />
+            <Link to="/signup">Create an account</Link>
           </form>
         </div>
       </div>
