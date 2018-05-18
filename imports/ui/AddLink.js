@@ -30,8 +30,8 @@ class AddLink extends Component {
   render() {
     return (
       <div>
-        <p>Add link</p>
-        <button onClick={()=>{
+      
+        <button className="button" onClick={()=>{
             this.setState({isOpen:true})
         }}>Add Link</button>
         <Modal 
@@ -41,10 +41,12 @@ class AddLink extends Component {
         onRequestClose={() => this.setState({isOpen:false,url:'', error:''})}
         isOpen={this.state.isOpen}
         contentLabel="Add Link"
+        className="boxed-view__box"
+        overlayClassName="boxed-view boxed-view--modal"
         >
         <h1>Add link</h1>
         {this.state.error ?<p>{this.state.error}</p> : undefined}
-          <form onSubmit={this.onSubmit}>
+          <form onSubmit={this.onSubmit} className="boxed-view__form">
             <input
               type="text"
               ref="url"
@@ -52,8 +54,8 @@ class AddLink extends Component {
               value={this.state.url}
               onChange={this.onChange}
             />
-               <button>Add Link</button>
-               <button onClick={()=>this.setState({isOpen:false,url:'', error:''})}>Cancel</button>
+               <button className="button" >Add Link</button>
+               <button className="button button--secondary" onClick={()=>this.setState({isOpen:false,url:'', error:''})}>Cancel</button>
 
           </form>
        

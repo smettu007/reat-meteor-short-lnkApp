@@ -29,18 +29,20 @@ class SignUp extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="boxed-view">
+            <div className="boxed-view__box">
                 <h1>Signup</h1>
-                {this.state.error}
-                <form onSubmit={this.onSubmit} noValidate>
+                <p>{this.state.error}</p>
+                <form onSubmit={this.onSubmit} noValidate className="boxed-view__form">
                     <input ref="email" type="email" name="email"  placeholder="Email"  />
                     <input  ref="password" type="password" name="password" placeholder="Password" />
-                    <button>Create Account</button>
+                    <button className="button">Create Account</button>
                 </form>
 
 
                 <Link to="/">Already lhave an account?</Link>
 
+            </div>
             </div>
         );
     }
