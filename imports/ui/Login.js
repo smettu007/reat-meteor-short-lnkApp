@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Meteor } from "meteor/meteor";
-
+import { Link } from 'react-router'
 class Login extends Component {
   state = {
     error: ""
